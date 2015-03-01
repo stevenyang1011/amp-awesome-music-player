@@ -7,6 +7,11 @@ var api   = require('music163');
 var fs = require('fs');
 // configure app
 
+app.use(express.static(__dirname + '/public'));
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 // log requests to access log
 var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
 app.use(morgan('combined', {stream: accessLogStream}));
@@ -24,28 +29,26 @@ var port     = process.env.PORT || 4570; // set our port
 // =============================================================================
 
 // create our router
+var apiRouter = express.Router();
 var router = express.Router();
 
-// middleware to use for all requests
-router.use(function(req, res, next) {
-	// do logging
-	console.log('Something is happening.');
-	next();
+//render index page
+router.get('/', function(req, res) {
+	res.render('pages/index');
 });
 
 // test route to make sure everything is working (accessed at GET http://localhost:4570/api)
-router.get('/', function(req, res) {
+apiRouter.get('/', function(req, res) {
 	res.json({ message: 'Welcome to our music 163 api!' });	
 });
 
 // on routes that end in /search
 // ----------------------------------------------------
-router.route('/search')
+apiRouter.route('/search')
 
 	// search for a keyword
 	.post(function(req, res) {
-		
-		api.search(req.body.keyword, function(err, data) {
+		api.search(req.body.q, function(err, data) {
 			if (err){
 				res.send(err);
 			} else {
@@ -57,19 +60,21 @@ router.route('/search')
 
 // on routes that end in /song
 // ----------------------------------------------------
-router.route('/song/:song_id')
+apiRouter.route('/song/:song_id')
 
 	// get the bear with that id
 	.get(function(req, res) {
-		  api.detail(req.params.song_id, function(err, data) {
-		    if (err) 
-		    	res.send(err);
+		api.detail(req.params.song_id, function(err, data) {
+			if (err){
+				res.send(err);
+			}
 			res.send(data);
-		  });
+		});
 	});
 
 // REGISTER OUR ROUTES -------------------------------
-app.use('/api', router);
+app.use('/api', apiRouter);
+app.use('/', router);
 
 // START THE SERVER
 // =============================================================================
