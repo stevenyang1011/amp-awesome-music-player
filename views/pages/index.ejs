@@ -71,7 +71,6 @@
 	<script type="text/javascript" src="js/jquery.jplayer.inspector.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-
 			playlist = new jPlayerPlaylist({
 				jPlayer: "#jquery_jplayer",
 				cssSelectorAncestor: "#jp_container"
@@ -118,7 +117,7 @@
 				  	if (status == 'success' && data.songs != undefined){
 				  		$( "#search-results" ).html('');
 			  			$.each(data.songs, function(){
-			  				$( "#search-results" ).append( '<li><a data-song-id="'+this.id +'">'+this.name+'</a></li>');
+			  				$( "#search-results" ).append( '<li><a data-song-id="'+this.id +'"><span>'+this.name+'</span> - '+ this.artists[0].name +'</a></li>');
 			  			});
 				  	}
 				    // $( "#search-results" ).html(data);
@@ -133,9 +132,10 @@
 				  			$.each(data.songs, function(){
 				  				if (this.mp3Url){
 				  					var songDetail ={
-				  						title:this.name,
+				  						title: this.name + ' - ' + this.artists[0].name,
 				  						id:this.id,
-				  						mp3:this.mp3Url
+				  						mp3:this.mp3Url,
+				  						poster:this.album.picUrl
 				  					}
 				  					playlist.add(songDetail);
 									$(playlist).trigger('playlist-update');
@@ -158,9 +158,10 @@
 						  			$.each(data.songs, function(){
 						  				if (this.mp3Url){
 											var songDetail = {
-						  						title:this.name,
+						  						title: this.name + ' - ' + this.artists[0].name,
 						  						id:this.id,
-						  						mp3:this.mp3Url
+						  						mp3:this.mp3Url,
+						  						poster:this.album.picUrl
 						  					}
 						  					playlist.add(songDetail);
 						  				}
@@ -171,8 +172,13 @@
 						});
 					});
 				}
+			$('#jquery_jplayer').on($.jPlayer.event.play,function(){
+				$('#jp_poster_0').css('width', '300px').css('height', '300px').addClass('spin');
+			}).on($.jPlayer.event.pause,function(){
+				$('#jp_poster_0').removeClass('spin');
 			});
-		</script>
+		});
+	</script>
 	<% include ../partials/after_footer %>
 </body>
 </html>
