@@ -1,183 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="amp">
 <head>
-    <% include ../partials/head %>
-</head>
-<body class="container">
-
-<header>
-    <% include ../partials/header %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The laboratory for all sorts of frontend experiments, maybe a blog as well.">
+    <meta name="robots" content="index, follow">
+    <title>Awesome Music Player</title>
+    <link rel="stylesheet" href="css/vendor.css">
     <link rel="stylesheet" href="css/jplayer.blue.monday.min.css">
-</header>
-
-<main>
-    <form action="/search" id="api-search-form">
-        <input type="text" name="q" placeholder="Search your song here...">
-        <button type="submit" title="search" class="button">Search</button>
-    </form>
-    <ul id="search-results"></ul>
-    <div id="jquery_jplayer" class="jp-jplayer"></div>
-    <div id="jp_container" class="jp-audio" role="application" aria-label="media player">
-        <div class="jp-type-playlist">
-            <div class="jp-gui jp-interface">
-                <div class="jp-controls">
-                    <button class="jp-previous" role="button" tabindex="0">previous</button>
-                    <button class="jp-play" role="button" tabindex="0">play</button>
-                    <button class="jp-next" role="button" tabindex="0">next</button>
-                    <button class="jp-stop" role="button" tabindex="0">stop</button>
-                </div>
-                <div class="jp-progress">
-                    <div class="jp-seek-bar">
-                        <div class="jp-play-bar"></div>
-                    </div>
-                </div>
-                <div class="jp-volume-controls">
-                    <button class="jp-mute" role="button" tabindex="0">mute</button>
-                    <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
-                    <div class="jp-volume-bar">
-                        <div class="jp-volume-bar-value"></div>
-                    </div>
-                </div>
-                <div class="jp-time-holder">
-                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-                </div>
-                <div class="jp-toggles">
-                    <button class="jp-repeat" role="button" tabindex="0">repeat</button>
-                    <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
-                </div>
-            </div>
-            <div class="jp-playlist">
-                <ul>
-                    <li>&nbsp;</li>
-                </ul>
-            </div>
-            <div class="jp-no-solution">
-                <span>Update Required</span>
-                To play the media you will need to either update your browser to a recent version or update your <a
-                        href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-            </div>
+</head>
+<body class="container" ng-controller="AppCtrl">
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+            <!--<md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button">-->
+                <!--<md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>-->
+            <!--</md-button>-->
+            <h1>Awesome Music Player</h1>
+        </div>
+    </md-toolbar>
+    <div layout="row" flex>
+        <!--<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">-->
+        <!--</md-sidenav>-->
+        <div layout="column" flex id="content">
+            <md-content layout="column" flex class="md-padding">
+                <% include ../partials/search %>
+                <% include ../partials/playlist %>
+            </md-content>
         </div>
     </div>
-    <div id="jplayer_inspector"></div>
-</main>
+    <script src="js/vendor.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
+    <script type="text/javascript" src="js/jquery.jplayer.inspector.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
 
-<footer>
-    <% include ../partials/footer %>
-</footer>
-<script src="js/vendor.js"></script>
-<script src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-<script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
-<script type="text/javascript" src="js/jquery.jplayer.inspector.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        playlist = new jPlayerPlaylist({
-                    jPlayer: "#jquery_jplayer",
-                    cssSelectorAncestor: "#jp_container"
-                },
-                [],
-                {
-                    swfPath: "../dist/jplayer",
-                    supplied: "oga, mp3",
-                    wmode: "window",
-                    useStateClassSkin: true,
-                    playlistOptions: {
-                        enableRemoveControls: true
-                    },
-                    autoBlur: false,
-                    smoothPlayBar: true,
-                    keyEnabled: true
-                });
-
-        $(playlist).on('playlist-update', function (e) {
-            var songIds = [];
-            var i = 0;
-            $(playlist.playlist).each(function () {
-                songIds[i++] = this.id;
-            });
-            $.cookie('playlist', escape(songIds.join(',')), {expires: 365});
-        });
-
-        $("#jplayer_inspector").jPlayerInspector({jPlayer: $("#jquery_jplayer")});
-
-        // Attach a submit handler to the form
-        $("#api-search-form").submit(function (event) {
-
-            // Stop form from submitting normally
-            event.preventDefault();
-
-            // Get some values from elements on the page:
-            var $form = $(this),
-                    term = $form.find("input[name='q']").val(),
-                    url = $form.attr("action");
-
-            // Send the data using post
-            $.post(url, $form.serialize(), function (data, status) {
-                //For now, render songs only
-                if (status == 'success' && data.songs != undefined) {
-                    $("#search-results").html('');
-                    $.each(data.songs, function () {
-                        $("#search-results").append('<li><a data-song-id="' + this.id + '"><span>' + this.name + '</span> - ' + this.artists[0].name + '</a></li>');
-                    });
-                }
-                // $( "#search-results" ).html(data);
-            }, "json");
-        });
-
-        //Handling adding songs to the playlist
-        $('#search-results').on('click', 'li a', function (e) {
-            var url = '/api/song/' + $(this).data('song-id');
-            $.get(url, function (data, status) {
-                if (status == 'success' && data.songs != undefined) {
-                    $.each(data.songs, function () {
-                        if (this.mp3Url) {
-                            var songDetail = {
-                                title: this.name + ' - ' + this.artists[0].name,
-                                id: this.id,
-                                mp3: this.mp3Url,
-                                poster: this.album.picUrl
-                            }
-                            playlist.add(songDetail);
-                            $(playlist).trigger('playlist-update');
-
-                        }
-                    });
-                }
-            });
-        });
-
-        var cookie = unescape($.cookie('playlist'));
-        var songIds = cookie.split(',');
-        var i = 0;
-        if (songIds.length > 0 && songIds != '') {
-            $(songIds).each(function () {
-                $.ajax({
-                    url: '/song/' + this,
-                    success: function (data, status) {
-                        if (status == 'success' && data.song != undefined) {
-                            if (data.song.mp3Url) {
-                                var songDetail = {
-                                    title: data.song.name + ' - ' + data.song.artists[0].name,
-                                    id: data.song.id,
-                                    mp3: data.song.mp3Url,
-                                    poster: data.song.album.picUrl
-                                }
-                                playlist.add(songDetail);
-                            }
-                        }
-                    },
-                    async: false
-                });
-            });
-        }
-        $('#jquery_jplayer').on($.jPlayer.event.play, function () {
-            $('#jp_poster_0').css('width', '300px').css('height', '300px').addClass('spin');
-        }).on($.jPlayer.event.pause, function () {
-            $('#jp_poster_0').removeClass('spin');
-        });
-    });
-</script>
-<% include ../partials/after_footer %>
+        ga('create', 'UA-55910264-1', 'auto');
+        ga('send', 'pageview');
+    </script>
 </body>
 </html>

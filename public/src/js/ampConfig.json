@@ -1,0 +1,8 @@
+{
+    "local": {
+        "api_url": "http://localhost:4570"
+    },
+    "production": {
+        "api_url": "http://player.stevenyang.nz"
+    }
+}

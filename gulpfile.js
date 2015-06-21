@@ -6,8 +6,11 @@ var
     livereload   = require('gulp-livereload'),
     uglify      = require('gulp-uglify'),
     concat      = require('gulp-concat'),
-    plumber      = require('gulp-plumber');
+    plumber      = require('gulp-plumber'),
+    rename      = require('gulp-rename'),
+    ngConstant = require('gulp-ng-constant');
 
+var configEnv = 'local';
 // CSS
 gulp.task('css:vendor', function() {
     return gulp
@@ -80,6 +83,19 @@ gulp.task('js:vendor', function() {
         .pipe(gulp.dest('public/js'))
         .pipe(notify({ message: 'Successfully JS vendor.js' }));
     ;
+});
+
+//Compile AngularJS configuration
+gulp.task('constants', function () {
+    var ampConfig = require('./public/src/js/ampConfig.json');
+    var envConfig = ampConfig[configEnv];
+    return ngConstant({
+        name: 'ampConfig',
+        constants: envConfig,
+        stream: true
+    })
+        .pipe(rename('ampConfig.js'))
+        .pipe(gulp.dest('./public/src/js'));
 });
 
 gulp.task('js:app', function() {
