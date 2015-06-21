@@ -10,7 +10,7 @@ var
     rename      = require('gulp-rename'),
     ngConstant = require('gulp-ng-constant');
 
-var configEnv = 'local';
+var configEnv = 'production';
 // CSS
 gulp.task('css:vendor', function() {
     return gulp

@@ -24,9 +24,9 @@ angular.module("ampConfig", [])
 
 
 app.controller('SearchController', ['$scope', '$http', 'ampConfig', function($scope, $http, ampConfig) {
-    $http.get(ampConfig + "/api/users")
+    $http.get(ampConfig + "/search")
         .success(function(response) {
-            $scope.employees = response.data;
+            console.log(response);
         });
 }]);
 
