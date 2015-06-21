@@ -108,7 +108,14 @@ exports.song = function(req, res, next) {
             if (data.songs.length>0){
                 data.songs.forEach(function(song){
                    if (song.mp3Url){
-                       res.send({'code':'200', 'mp3Url': song.mp3Url});
+                       res.send({'code':'200', 'song': {
+                           'id': song.id,
+                           'name': song.name,
+                           'mp3Url': song.mp3Url,
+                           'artists': song.artists,
+                           'album': song.album
+                        }
+                       });
 
                    }
                 });

@@ -1,184 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<% include ../partials/head %>
+    <% include ../partials/head %>
 </head>
 <body class="container">
 
-	<header>
-		<% include ../partials/header %>
-		<link rel="stylesheet" href="css/jplayer.blue.monday.min.css">
-	</header>
+<header>
+    <% include ../partials/header %>
+    <link rel="stylesheet" href="css/jplayer.blue.monday.min.css">
+</header>
 
-	<main>
-	<form action="/search" id="api-search-form">
-		<input type="text" name="q" placeholder="Search your song here...">
-		<button type="submit" title="search" class="button">Search</button>
-	</form>
-	<ul id="search-results"></ul>
-		<div id="jquery_jplayer" class="jp-jplayer"></div>
-		<div id="jp_container" class="jp-audio" role="application" aria-label="media player">
-			<div class="jp-type-playlist">
-				<div class="jp-gui jp-interface">
-					<div class="jp-controls">
-						<button class="jp-previous" role="button" tabindex="0">previous</button>
-						<button class="jp-play" role="button" tabindex="0">play</button>
-						<button class="jp-next" role="button" tabindex="0">next</button>
-						<button class="jp-stop" role="button" tabindex="0">stop</button>
-					</div>
-					<div class="jp-progress">
-						<div class="jp-seek-bar">
-							<div class="jp-play-bar"></div>
-						</div>
-					</div>
-					<div class="jp-volume-controls">
-						<button class="jp-mute" role="button" tabindex="0">mute</button>
-						<button class="jp-volume-max" role="button" tabindex="0">max volume</button>
-						<div class="jp-volume-bar">
-							<div class="jp-volume-bar-value"></div>
-						</div>
-					</div>
-					<div class="jp-time-holder">
-						<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-						<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-					</div>
-					<div class="jp-toggles">
-						<button class="jp-repeat" role="button" tabindex="0">repeat</button>
-						<button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
-					</div>
-				</div>
-				<div class="jp-playlist">
-					<ul>
-						<li>&nbsp;</li>
-					</ul>
-				</div>
-				<div class="jp-no-solution">
-					<span>Update Required</span>
-					To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-				</div>
-			</div>
-		</div>
-		<div id="jplayer_inspector"></div>
-	</main>
+<main>
+    <form action="/search" id="api-search-form">
+        <input type="text" name="q" placeholder="Search your song here...">
+        <button type="submit" title="search" class="button">Search</button>
+    </form>
+    <ul id="search-results"></ul>
+    <div id="jquery_jplayer" class="jp-jplayer"></div>
+    <div id="jp_container" class="jp-audio" role="application" aria-label="media player">
+        <div class="jp-type-playlist">
+            <div class="jp-gui jp-interface">
+                <div class="jp-controls">
+                    <button class="jp-previous" role="button" tabindex="0">previous</button>
+                    <button class="jp-play" role="button" tabindex="0">play</button>
+                    <button class="jp-next" role="button" tabindex="0">next</button>
+                    <button class="jp-stop" role="button" tabindex="0">stop</button>
+                </div>
+                <div class="jp-progress">
+                    <div class="jp-seek-bar">
+                        <div class="jp-play-bar"></div>
+                    </div>
+                </div>
+                <div class="jp-volume-controls">
+                    <button class="jp-mute" role="button" tabindex="0">mute</button>
+                    <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+                    <div class="jp-volume-bar">
+                        <div class="jp-volume-bar-value"></div>
+                    </div>
+                </div>
+                <div class="jp-time-holder">
+                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                </div>
+                <div class="jp-toggles">
+                    <button class="jp-repeat" role="button" tabindex="0">repeat</button>
+                    <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
+                </div>
+            </div>
+            <div class="jp-playlist">
+                <ul>
+                    <li>&nbsp;</li>
+                </ul>
+            </div>
+            <div class="jp-no-solution">
+                <span>Update Required</span>
+                To play the media you will need to either update your browser to a recent version or update your <a
+                        href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+            </div>
+        </div>
+    </div>
+    <div id="jplayer_inspector"></div>
+</main>
 
-	<footer>
-		<% include ../partials/footer %>
-	</footer>
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/jquery.cookie.js"></script>
-	<script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-	<script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
-	<script type="text/javascript" src="js/jquery.jplayer.inspector.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			playlist = new jPlayerPlaylist({
-				jPlayer: "#jquery_jplayer",
-				cssSelectorAncestor: "#jp_container"
-				}, 
-				[],
-				{
-					swfPath: "../dist/jplayer",
-					supplied: "oga, mp3",
-					wmode: "window",
-					useStateClassSkin: true,
-					playlistOptions: {
-						enableRemoveControls: true
-					},
-					autoBlur: false,
-					smoothPlayBar: true,
-					keyEnabled: true
-				});
+<footer>
+    <% include ../partials/footer %>
+</footer>
+<script src="js/vendor.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
+<script type="text/javascript" src="js/jquery.jplayer.inspector.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        playlist = new jPlayerPlaylist({
+                    jPlayer: "#jquery_jplayer",
+                    cssSelectorAncestor: "#jp_container"
+                },
+                [],
+                {
+                    swfPath: "../dist/jplayer",
+                    supplied: "oga, mp3",
+                    wmode: "window",
+                    useStateClassSkin: true,
+                    playlistOptions: {
+                        enableRemoveControls: true
+                    },
+                    autoBlur: false,
+                    smoothPlayBar: true,
+                    keyEnabled: true
+                });
 
-				$(playlist).on('playlist-update', function(e){
-					var songIds = [];
-					var i = 0;
-					$(playlist.playlist).each(function(){
-						songIds[i++] = this.id;
-					});
-					$.cookie('playlist', escape(songIds.join(',')), {expires:365});
-				});
+        $(playlist).on('playlist-update', function (e) {
+            var songIds = [];
+            var i = 0;
+            $(playlist.playlist).each(function () {
+                songIds[i++] = this.id;
+            });
+            $.cookie('playlist', escape(songIds.join(',')), {expires: 365});
+        });
 
-				$("#jplayer_inspector").jPlayerInspector({jPlayer:$("#jquery_jplayer")});
-				
-				// Attach a submit handler to the form
-				$( "#api-search-form" ).submit(function( event ) {
-				 
-				  // Stop form from submitting normally
-				  event.preventDefault();
-				 
-				  // Get some values from elements on the page:
-				  var $form = $( this ),
-				    term = $form.find( "input[name='q']" ).val(),
-				    url = $form.attr( "action" );
+        $("#jplayer_inspector").jPlayerInspector({jPlayer: $("#jquery_jplayer")});
 
-				  // Send the data using post
-				  $.post( url, $form.serialize(), function(data, status){
-				  	//For now, render songs only
-				  	if (status == 'success' && data.songs != undefined){
-				  		$( "#search-results" ).html('');
-			  			$.each(data.songs, function(){
-			  				$( "#search-results" ).append( '<li><a data-song-id="'+this.id +'"><span>'+this.name+'</span> - '+ this.artists[0].name +'</a></li>');
-			  			});
-				  	}
-				    // $( "#search-results" ).html(data);
-				  }, "json" );
-				});
+        // Attach a submit handler to the form
+        $("#api-search-form").submit(function (event) {
 
-				//Handling adding songs to the playlist
-				$('#search-results').on('click','li a',function(e){
-					var url = '/api/song/' + $(this).data('song-id');
-					$.get( url, function(data, status){
-					  	if (status == 'success' && data.songs != undefined){
-				  			$.each(data.songs, function(){
-				  				if (this.mp3Url){
-				  					var songDetail ={
-				  						title: this.name + ' - ' + this.artists[0].name,
-				  						id:this.id,
-				  						mp3:this.mp3Url,
-				  						poster:this.album.picUrl
-				  					}
-				  					playlist.add(songDetail);
-									$(playlist).trigger('playlist-update');
+            // Stop form from submitting normally
+            event.preventDefault();
 
-				  				}
-				  			});
-					  	}
-					});
-				});
+            // Get some values from elements on the page:
+            var $form = $(this),
+                    term = $form.find("input[name='q']").val(),
+                    url = $form.attr("action");
 
-				var cookie = unescape($.cookie('playlist'));
-				var songIds = cookie.split(',');
-				var i = 0;
-				if (songIds.length > 0){
-					$(songIds).each(function(){
-						$.ajax({
-							url: '/api/song/' + this, 
-							success: function(data, status){
-						  		if (status == 'success' && data.songs != undefined){
-						  			$.each(data.songs, function(){
-						  				if (this.mp3Url){
-											var songDetail = {
-						  						title: this.name + ' - ' + this.artists[0].name,
-						  						id:this.id,
-						  						mp3:this.mp3Url,
-						  						poster:this.album.picUrl
-						  					}
-						  					playlist.add(songDetail);
-						  				}
-						  			});
-							  	}
-							},
-							async: false
-						});
-					});
-				}
-			$('#jquery_jplayer').on($.jPlayer.event.play,function(){
-				$('#jp_poster_0').css('width', '300px').css('height', '300px').addClass('spin');
-			}).on($.jPlayer.event.pause,function(){
-				$('#jp_poster_0').removeClass('spin');
-			});
-		});
-	</script>
-	<% include ../partials/after_footer %>
+            // Send the data using post
+            $.post(url, $form.serialize(), function (data, status) {
+                //For now, render songs only
+                if (status == 'success' && data.songs != undefined) {
+                    $("#search-results").html('');
+                    $.each(data.songs, function () {
+                        $("#search-results").append('<li><a data-song-id="' + this.id + '"><span>' + this.name + '</span> - ' + this.artists[0].name + '</a></li>');
+                    });
+                }
+                // $( "#search-results" ).html(data);
+            }, "json");
+        });
+
+        //Handling adding songs to the playlist
+        $('#search-results').on('click', 'li a', function (e) {
+            var url = '/api/song/' + $(this).data('song-id');
+            $.get(url, function (data, status) {
+                if (status == 'success' && data.songs != undefined) {
+                    $.each(data.songs, function () {
+                        if (this.mp3Url) {
+                            var songDetail = {
+                                title: this.name + ' - ' + this.artists[0].name,
+                                id: this.id,
+                                mp3: this.mp3Url,
+                                poster: this.album.picUrl
+                            }
+                            playlist.add(songDetail);
+                            $(playlist).trigger('playlist-update');
+
+                        }
+                    });
+                }
+            });
+        });
+
+        var cookie = unescape($.cookie('playlist'));
+        var songIds = cookie.split(',');
+        var i = 0;
+        if (songIds.length > 0 && songIds != '') {
+            $(songIds).each(function () {
+                $.ajax({
+                    url: '/song/' + this,
+                    success: function (data, status) {
+                        if (status == 'success' && data.song != undefined) {
+                            if (data.song.mp3Url) {
+                                var songDetail = {
+                                    title: data.song.name + ' - ' + data.song.artists[0].name,
+                                    id: data.song.id,
+                                    mp3: data.song.mp3Url,
+                                    poster: data.song.album.picUrl
+                                }
+                                playlist.add(songDetail);
+                            }
+                        }
+                    },
+                    async: false
+                });
+            });
+        }
+        $('#jquery_jplayer').on($.jPlayer.event.play, function () {
+            $('#jp_poster_0').css('width', '300px').css('height', '300px').addClass('spin');
+        }).on($.jPlayer.event.pause, function () {
+            $('#jp_poster_0').removeClass('spin');
+        });
+    });
+</script>
+<% include ../partials/after_footer %>
 </body>
 </html>

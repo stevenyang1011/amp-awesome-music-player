@@ -1,0 +1,27 @@
+{
+  "name": "netease-music-api",
+  "version": "0.0.0",
+  "homepage": "https://github.com/stevenyang1011/netease-music-api",
+  "authors": [
+    "Steven Yang <zijieyang11@gmail.com.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-soundmanager2": "~0.5.6"
+  },
+  "devDependencies": {
+    "angular-material": "~0.10.0",
+    "jquery": "~2.1.4",
+    "angular-aria": "~1.4.1",
+    "angular-messages": "~1.4.1",
+    "angular-animate": "~1.4.1",
+    "angular-route": "~1.4.1"
+  }
+}
