@@ -18,19 +18,19 @@ app.config(function($mdThemingProvider) {
 });
 angular.module("ampConfig", [])
 
-.constant("searchSongUrl", "http://localhost:4570/search/song")
+.constant("searchSongUrl", "http://player.stevenyang.nz/search/song")
 
-.constant("searchArtistUrl", "http://localhost:4570/search/artist")
+.constant("searchArtistUrl", "http://player.stevenyang.nz/search/artist")
 
-.constant("searchAlbumUrl", "http://localhost:4570/search/album")
+.constant("searchAlbumUrl", "http://player.stevenyang.nz/search/album")
 
-.constant("viewArtistUrl", "http://localhost:4570/view/artist/")
+.constant("viewArtistUrl", "http://player.stevenyang.nz/view/artist/")
 
-.constant("viewAlbumUrl", "http://localhost:4570/view/album/")
+.constant("viewAlbumUrl", "http://player.stevenyang.nz/view/album/")
 
-.constant("viewSongUrl", "http://localhost:4570/song/")
+.constant("viewSongUrl", "http://player.stevenyang.nz/song/")
 
-.constant("viewLyricsUrl", "http://localhost:4570/lyrics/")
+.constant("viewLyricsUrl", "http://player.stevenyang.nz/lyrics/")
 
 ;
 
