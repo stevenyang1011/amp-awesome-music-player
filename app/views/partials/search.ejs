@@ -1,35 +1,41 @@
-<div>
-    <form action="/search" id="api-search-form">
+<div class='search-section' ng-controller="SearchController">
+    <form ng-submit="handleSearchButtonClick()">
         <div layout layout-sm="column">
             <md-input-container flex>
                 <label>Search here...</label>
-                <input ng-model="search.text">
+                <input ng-model="q">
             </md-input-container>
-            <md-button type="submit" title="search" class="button">Search</md-button>
+            <md-button class="button">Search</md-button>
         </div>
     </form>
-<!--<ul id="search-results"></ul>-->
+    <!--<ul id="search-results"></ul>-->
     <div>
         <md-content class="md-padding">
             <md-tabs md-dynamic-height md-border-bottom>
-                <md-tab label="one">
+                <md-tab label="Songs">
                     <md-content class="md-padding">
-                        <h1 class="md-display-2">Tab One</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                        <md-grid-list
+                                md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
+                                md-row-height-gt-md="1:1" md-row-height="2:2"
+                                md-gutter="12px" md-gutter-gt-sm="8px" >
+                            <md-grid-tile md-rowspan="1" md-colspan="1" md-colspan-sm="1"
+                                    ng-repeat="song in songs.data" ng-style="{'background-image':'url({{song.album.picUrl}})'}">
+                                <md-grid-tile-footer>
+                                    <h3>{{song.name}} - {{song.artists[0].name}}</h3>
+                                    <h4>{{song.album.name}}</h4>
+                                </md-grid-tile-footer>
+                            </md-grid-tile>
+                        </md-grid-list>
                     </md-content>
                 </md-tab>
-                <md-tab label="two">
+                <md-tab label="Artists">
                     <md-content class="md-padding">
-                        <h1 class="md-display-2">Tab Two</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-                        <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-                        <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+
                     </md-content>
                 </md-tab>
-                <md-tab label="three">
+                <md-tab label="Albums">
                     <md-content class="md-padding">
-                        <h1 class="md-display-2">Tab Three</h1>
-                        <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+
                     </md-content>
                 </md-tab>
             </md-tabs>

@@ -18,121 +18,156 @@ app.config(function($mdThemingProvider) {
 });
 angular.module("ampConfig", [])
 
-.constant("api_url", "http://localhost:4570")
+.constant("searchSongUrl", "http://localhost:4570/search/song")
+
+.constant("searchArtistUrl", "http://localhost:4570/search/artist")
+
+.constant("searchAlbumUrl", "http://localhost:4570/search/album")
+
+.constant("viewArtistUrl", "http://localhost:4570/view/artist/")
+
+.constant("viewAlbumUrl", "http://localhost:4570/view/album/")
+
+.constant("viewSongUrl", "http://localhost:4570/song/")
+
+.constant("viewLyricsUrl", "http://localhost:4570/lyrics/")
 
 ;
 
 
-app.controller('SearchController', ['$scope', '$http', 'ampConfig', function($scope, $http, ampConfig) {
-    $http.get(ampConfig + "/search")
-        .success(function(response) {
-            console.log(response);
-        });
-}]);
-
-$(document).ready(function () {
-    playlist = new jPlayerPlaylist({
-            jPlayer: "#jquery_jplayer",
-            cssSelectorAncestor: "#jp_container"
-        },
-        [],
-        {
-            swfPath: "../dist/jplayer",
-            supplied: "oga, mp3",
-            wmode: "window",
-            useStateClassSkin: true,
-            playlistOptions: {
-                enableRemoveControls: true
-            },
-            autoBlur: false,
-            smoothPlayBar: true,
-            keyEnabled: true
-        });
-
-    $(playlist).on('playlist-update', function (e) {
-        var songIds = [];
-        var i = 0;
-        $(playlist.playlist).each(function () {
-            songIds[i++] = this.id;
-        });
-        $.cookie('playlist', escape(songIds.join(',')), {expires: 365});
-    });
-
-    $("#jplayer_inspector").jPlayerInspector({jPlayer: $("#jquery_jplayer")});
-
-    // Attach a submit handler to the form
-    $("#api-search-form").submit(function (event) {
-
-        // Stop form from submitting normally
-        event.preventDefault();
-
-        // Get some values from elements on the page:
-        var $form = $(this),
-            term = $form.find("input[name='q']").val(),
-            url = $form.attr("action");
-
-        // Send the data using post
-        $.post(url, $form.serialize(), function (data, status) {
-            //For now, render songs only
-            if (status == 'success' && data.songs != undefined) {
-                $("#search-results").html('');
-                $.each(data.songs, function () {
-                    $("#search-results").append('<li><a data-song-id="' + this.id + '"><span>' + this.name + '</span> - ' + this.artists[0].name + '</a></li>');
-                });
+app.controller('SearchController', ['$scope', '$http', 'searchSongUrl', 'searchArtistUrl', 'searchAlbumUrl', function($scope, $http, searchSongUrl, searchArtistUrl, searchAlbumUrl) {
+    $scope.songs = {
+        'p': 1,
+        'data': ''
+    };
+    $scope.artists = {
+        'p': 1,
+        'data': ''
+    };
+    $scope.albums = {
+        'p': 1,
+        'data': ''
+    };
+    $scope.handleSearchButtonClick = function(){
+        $scope.songs.p = 1;
+        $scope.searchSongs();
+    }
+    $scope.searchSongs = function(){
+        $http.post(searchSongUrl,{
+            'q': $scope.q,
+            'p': $scope.songs.p
+        }).success(function(response) {
+            if(response.code == '200'){
+                console.log(response.result);
+                $scope.songs.data = response.result;
             }
-            // $( "#search-results" ).html(data);
-        }, "json");
-    });
-
-    //Handling adding songs to the playlist
-    $('#search-results').on('click', 'li a', function (e) {
-        var url = '/api/song/' + $(this).data('song-id');
-        $.get(url, function (data, status) {
-            if (status == 'success' && data.songs != undefined) {
-                $.each(data.songs, function () {
-                    if (this.mp3Url) {
-                        var songDetail = {
-                            title: this.name + ' - ' + this.artists[0].name,
-                            id: this.id,
-                            mp3: this.mp3Url,
-                            poster: this.album.picUrl
-                        }
-                        playlist.add(songDetail);
-                        $(playlist).trigger('playlist-update');
-
-                    }
-                });
-            }
-        });
-    });
-
-    var cookie = unescape($.cookie('playlist'));
-    var songIds = cookie.split(',');
-    var i = 0;
-    if (songIds.length > 0 && songIds != '') {
-        $(songIds).each(function () {
-            $.ajax({
-                url: '/song/' + this,
-                success: function (data, status) {
-                    if (status == 'success' && data.song != undefined) {
-                        if (data.song.mp3Url) {
-                            var songDetail = {
-                                title: data.song.name + ' - ' + data.song.artists[0].name,
-                                id: data.song.id,
-                                mp3: data.song.mp3Url,
-                                poster: data.song.album.picUrl
-                            }
-                            playlist.add(songDetail);
-                        }
-                    }
-                },
-                async: false
-            });
         });
     }
-    $('#jquery_jplayer').on($.jPlayer.event.play, function () {
-        $('#jp_poster_0').css('width', '300px').css('height', '300px').addClass('spin');
-    }).on($.jPlayer.event.pause, function () {
-        $('#jp_poster_0').removeClass('spin');
-    });
-});
+}]);
+
+//$(document).ready(function () {
+//    playlist = new jPlayerPlaylist({
+//            jPlayer: "#jquery_jplayer",
+//            cssSelectorAncestor: "#jp_container"
+//        },
+//        [],
+//        {
+//            swfPath: "../dist/jplayer",
+//            supplied: "oga, mp3",
+//            wmode: "window",
+//            useStateClassSkin: true,
+//            playlistOptions: {
+//                enableRemoveControls: true
+//            },
+//            autoBlur: false,
+//            smoothPlayBar: true,
+//            keyEnabled: true
+//        });
+//
+//    $(playlist).on('playlist-update', function (e) {
+//        var songIds = [];
+//        var i = 0;
+//        $(playlist.playlist).each(function () {
+//            songIds[i++] = this.id;
+//        });
+//        $.cookie('playlist', escape(songIds.join(',')), {expires: 365});
+//    });
+//
+//    $("#jplayer_inspector").jPlayerInspector({jPlayer: $("#jquery_jplayer")});
+//
+//    // Attach a submit handler to the form
+//    $("#api-search-form").submit(function (event) {
+//
+//        // Stop form from submitting normally
+//        event.preventDefault();
+//
+//        // Get some values from elements on the page:
+//        var $form = $(this),
+//            term = $form.find("input[name='q']").val(),
+//            url = $form.attr("action");
+//
+//        // Send the data using post
+//        $.post(url, $form.serialize(), function (data, status) {
+//            //For now, render songs only
+//            if (status == 'success' && data.songs != undefined) {
+//                $("#search-results").html('');
+//                $.each(data.songs, function () {
+//                    $("#search-results").append('<li><a data-song-id="' + this.id + '"><span>' + this.name + '</span> - ' + this.artists[0].name + '</a></li>');
+//                });
+//            }
+//            // $( "#search-results" ).html(data);
+//        }, "json");
+//    });
+//
+//    //Handling adding songs to the playlist
+//    $('#search-results').on('click', 'li a', function (e) {
+//        var url = '/api/song/' + $(this).data('song-id');
+//        $.get(url, function (data, status) {
+//            if (status == 'success' && data.songs != undefined) {
+//                $.each(data.songs, function () {
+//                    if (this.mp3Url) {
+//                        var songDetail = {
+//                            title: this.name + ' - ' + this.artists[0].name,
+//                            id: this.id,
+//                            mp3: this.mp3Url,
+//                            poster: this.album.picUrl
+//                        }
+//                        playlist.add(songDetail);
+//                        $(playlist).trigger('playlist-update');
+//
+//                    }
+//                });
+//            }
+//        });
+//    });
+//
+//    var cookie = unescape($.cookie('playlist'));
+//    var songIds = cookie.split(',');
+//    var i = 0;
+//    if (songIds.length > 0 && songIds != '') {
+//        $(songIds).each(function () {
+//            $.ajax({
+//                url: '/song/' + this,
+//                success: function (data, status) {
+//                    if (status == 'success' && data.song != undefined) {
+//                        if (data.song.mp3Url) {
+//                            var songDetail = {
+//                                title: data.song.name + ' - ' + data.song.artists[0].name,
+//                                id: data.song.id,
+//                                mp3: data.song.mp3Url,
+//                                poster: data.song.album.picUrl
+//                            }
+//                            playlist.add(songDetail);
+//                        }
+//                    }
+//                },
+//                async: false
+//            });
+//        });
+//    }
+//    $('#jquery_jplayer').on($.jPlayer.event.play, function () {
+//        $('#jp_poster_0').css('width', '300px').css('height', '300px').addClass('spin');
+//    }).on($.jPlayer.event.pause, function () {
+//        $('#jp_poster_0').removeClass('spin');
+//    });
+//});

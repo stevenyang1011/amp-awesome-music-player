@@ -1,8 +1,20 @@
 {
-    "local": {
-        "api_url": "http://localhost:4570"
+    "development": {
+      "searchSongUrl": "http://localhost:4570/search/song",
+      "searchArtistUrl": "http://localhost:4570/search/artist",
+      "searchAlbumUrl": "http://localhost:4570/search/album",
+      "viewArtistUrl": "http://localhost:4570/view/artist/",
+      "viewAlbumUrl": "http://localhost:4570/view/album/",
+      "viewSongUrl": "http://localhost:4570/song/",
+      "viewLyricsUrl": "http://localhost:4570/lyrics/"
     },
     "production": {
-        "api_url": "http://player.stevenyang.nz"
+      "searchSongUrl": "http://player.stevenyang.nz/search/song",
+      "searchArtistUrl": "http://player.stevenyang.nz/search/artist",
+      "searchAlbumUrl": "http://player.stevenyang.nz/search/album",
+      "viewArtistUrl": "http://player.stevenyang.nz/view/artist/",
+      "viewAlbumUrl": "http://player.stevenyang.nz/view/album/",
+      "viewSongUrl": "http://player.stevenyang.nz/song/",
+      "viewLyricsUrl": "http://player.stevenyang.nz/lyrics/"
     }
 }
