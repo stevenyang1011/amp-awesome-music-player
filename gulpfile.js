@@ -10,7 +10,7 @@ var
     rename      = require('gulp-rename'),
     ngConstant = require('gulp-ng-constant');
 
-var configEnv = 'local';
+var configEnv = 'development';
 // CSS
 gulp.task('css:vendor', function() {
     return gulp
@@ -27,7 +27,7 @@ gulp.task('css:vendor', function() {
 
 gulp.task('css:app', function() {
     return gulp
-        .src('public/src/less/style.less')
+        .src('public/src/less/*.less')
         .pipe(plumber({
             errorHandler: notify.onError(function (error) {
                 return 'Error compiling LESS: ' + error.message;
