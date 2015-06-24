@@ -14,7 +14,10 @@ var configEnv = 'development';
 // CSS
 gulp.task('css:vendor', function() {
     return gulp
-        .src(['./bower_components/angular-material/angular-material.css'])
+        .src([
+            './bower_components/font-awesome/css/font-awesome.css',
+            './bower_components/angular-material/angular-material.css'
+        ])
         .pipe(plumber({
             errorHandler: notify.onError(function (error) {
                 return 'Error compiling LESS: ' + error.message;

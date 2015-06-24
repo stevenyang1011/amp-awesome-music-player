@@ -1,4 +1,4 @@
-app.controller('SearchController', ['$scope', '$rootScope', '$http', 'searchSongUrl', 'searchArtistUrl', 'searchAlbumUrl', function($scope, $rootScope, $http, searchSongUrl, searchArtistUrl, searchAlbumUrl) {
+app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast', 'searchSongUrl', 'searchArtistUrl', 'searchAlbumUrl', function($scope, $rootScope, $http, $mdToast, searchSongUrl, searchArtistUrl, searchAlbumUrl) {
     $scope.songs = {
         'p': 1,
         'data': ''
@@ -26,8 +26,12 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', 'searchSong
             }
         });
     }
-    //$scope.handleTileClick = function(song){
-    //    song.url = song.mp3Url;
-    //    $rootScope.$broadcast('addToPlaylist', song);
-    //}
+    $scope.showAddToPlaylistToast = function() {
+        $mdToast.show(
+            $mdToast.simple()
+                .content('Added to Playlist!')
+                .position('bottom right')
+                .hideDelay(3000)
+        );
+    };
 }]);

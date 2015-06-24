@@ -16,15 +16,12 @@
                     <div class="seekLoad" ng-style="{width : ( progress + '%' ) }"></div>
                 </div>
                 <br />
-                <button play-music>Play</button>
-                -
-                <button pause-music>Pause</button>
-                -
-                <button stop-music>Stop</button>
-                -
-                <button repeat-music>Repeat ({{ repeat }})</button>
-                -
-                <button play-pause-toggle data-play="Play!" data-pause="Pause!">Play Toggle</button>
+                <md-button play-music class="md-fab md-mini" aria-label="Play"><i class="fa fa-play"></i></md-button>
+                <md-button pause-music class="md-fab md-mini" aria-label="Pause"><i class="fa fa-pause"></i></md-button>
+                <md-button stop-music class="md-fab md-mini" aria-label="Stop"><i class="fa fa-stop"></i></md-button>
+                <md-button ng-class="active: repeat" repeat-music class="md-fab md-mini" aria-label="Repeat"><i class="fa fa-repeat"></i></md-button>
+                <!--<button repeat-music>Repeat ({{ repeat }})</button>-->
+                <md-button class="md-fab md-mini" aria-label="Play/Pause" play-pause-toggle data-play="<i class='fa fa-play'></i>" data-pause="<i class='fa fa-pause'>"><i class="fa fa-play"></i></md-button>
 
                 Is Playing: {{ isPlaying }}
                 <br/>

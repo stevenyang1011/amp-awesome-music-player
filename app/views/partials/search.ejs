@@ -10,8 +10,8 @@
     </form>
     <!--<ul id="search-results"></ul>-->
     <div>
-        <md-content class="md-padding">
-            <md-tabs md-dynamic-height md-border-bottom>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom md-center-tabs="false">
                 <md-tab label="Songs">
                     <md-content class="md-padding">
                         <md-grid-list
@@ -20,10 +20,11 @@
                                 md-gutter="12px" md-gutter-gt-sm="8px" >
                             <md-grid-tile md-rowspan="1" md-colspan="1" md-colspan-sm="1"
                                     ng-repeat="song in songs.data" ng-style="{'background-image':'url({{song.album.picUrl}})'}">
-                                <md-grid-tile-footer music-player add-song="song">
+                                <md-grid-tile-footer>
                                     <h3>{{song.name}} - {{song.artists[0].name}}</h3>
                                     <h4>{{song.album.name}}</h4>
                                 </md-grid-tile-footer>
+                                <md-button ng-click="showAddToPlaylistToast()" music-player add-song="song" class="add-button md-fab md-mini" aria-label="Add to Playlist"><i class="fa fa-plus" ></i></md-button>
                             </md-grid-tile>
                         </md-grid-list>
                     </md-content>
