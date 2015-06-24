@@ -20,7 +20,7 @@
                                 md-gutter="12px" md-gutter-gt-sm="8px" >
                             <md-grid-tile md-rowspan="1" md-colspan="1" md-colspan-sm="1"
                                     ng-repeat="song in songs.data" ng-style="{'background-image':'url({{song.album.picUrl}})'}">
-                                <md-grid-tile-footer>
+                                <md-grid-tile-footer music-player add-song="song">
                                     <h3>{{song.name}} - {{song.artists[0].name}}</h3>
                                     <h4>{{song.album.name}}</h4>
                                 </md-grid-tile-footer>

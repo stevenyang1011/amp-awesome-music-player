@@ -4,12 +4,17 @@
  *
  */
 
-var app = angular.module('amp', ['ngMaterial', 'ampConfig']);
+var app = angular.module('amp', ['ngMaterial', 'ampConfig', 'angularSoundManager']);
 
-app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav) {
-    $scope.toggleSidenav = function (menuId) {
-        $mdSidenav(menuId).toggle();
-    };
+app.controller('AppCtrl', ['$scope', '$rootScope', '$mdSidenav', '$mdUtil', function($scope, $rootScope, $mdSidenav, $mdUtil) {
+    $scope.togglePlaylist = buildToggler('right');
+    function buildToggler(navID) {
+        var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+                .toggle()
+        },300);
+        return debounceFn;
+    }
 }]);
 
 app.config(function($mdThemingProvider) {
