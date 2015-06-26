@@ -7,8 +7,16 @@
             <div class="col-md-12">
                 <!-- init soundManager2 player -->
                 <sound-manager></sound-manager>
-<p>{{progress}}</p>
-                <md-slider flex min="0" max="100" ng-model="progress" aria-label="progress">
+                <ul>
+                    <li ng-repeat="song in playlist">
+                        <a play-from-playlist="song">{{ song.name }}</a>
+                        <a remove-from-playlist="song" data-index="{{$index}}">
+                            <small>(remove)</small>
+                        </a>
+                        <span ng-if="currentPlaying.id == song.id"> - (current)</span>
+                    </li>
+                </ul>
+                <md-slider flex min="0" max="100" ng-model="progress" aria-label="progress" ng-disabled="true">
                 </md-slider>
                 <p>
                     Currently Playing: {{ currentPlaying.name }} by {{ currentPlaying.artists[0].name }} ({{ currentPostion }} / {{ currentDuration }})
@@ -26,18 +34,7 @@
                 </md-slider>
                 <md-button prev-track class="md-fab md-mini" aria-label="Prev Track"><i class="fa fa-step-backward"></i></md-button>
                 <md-button next-track class="md-fab md-mini" aria-label="Next Track"><i class="fa fa-step-forward"></i></md-button>
-                <button clear-playlist>Clear Playlist</button>
-                <h5>Playlist</h5>
-                <ul>
-                    <li ng-repeat="song in playlist">
-                        <a play-from-playlist="song">{{ song.name }}</a>
-                        -
-                        <a remove-from-playlist="song" data-index="{{$index}}">
-                            <small>(remove)</small>
-                        </a>
-                        <span ng-if="currentPlaying.id == song.id"> - (current)</span>
-                    </li>
-                </ul>
+                <!--<button clear-playlist>Clear Playlist</button>-->
             </div>
         </div>
     </div>
