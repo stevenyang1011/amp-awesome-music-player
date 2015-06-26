@@ -58,9 +58,9 @@ gulp.task('js:vendor', function() {
             //'./bower_components/angular-ui-router/release/angular-ui-router.js',
             './bower_components/angular-material/angular-material.js',
             // player
-            './bower_components/angular-soundmanager2/dist/angular-soundmanager2.js'
+            './bower_components/angular-soundmanager2/dist/angular-soundmanager2.js',
             // Angular storage
-            //'./bower_components/ngstorage/ngStorage.js',
+            './bower_components/ngstorage/ngStorage.js'
             // Angular UI Utils
             //'./bower_components/angular-ui-utils/ui-utils.js',
             // Angular Translate

@@ -4,7 +4,7 @@
  *
  */
 
-var app = angular.module('amp', ['ngMaterial', 'ampConfig', 'angularSoundManager']);
+var app = angular.module('amp', ['ngStorage', 'ngMaterial', 'ampConfig', 'angularSoundManager']);
 
 app.controller('AppCtrl', ['$scope', '$rootScope', '$mdSidenav', '$mdUtil', function($scope, $rootScope, $mdSidenav, $mdUtil) {
     $scope.togglePlaylist = buildToggler('right');

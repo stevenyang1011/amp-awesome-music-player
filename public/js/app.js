@@ -4,7 +4,7 @@
  *
  */
 
-var app = angular.module('amp', ['ngMaterial', 'ampConfig', 'angularSoundManager']);
+var app = angular.module('amp', ['ngStorage', 'ngMaterial', 'ampConfig', 'angularSoundManager']);
 
 app.controller('AppCtrl', ['$scope', '$rootScope', '$mdSidenav', '$mdUtil', function($scope, $rootScope, $mdSidenav, $mdUtil) {
     $scope.togglePlaylist = buildToggler('right');
@@ -38,13 +38,24 @@ angular.module("ampConfig", [])
 .constant("viewLyricsUrl", "http://player.stevenyang.nz/lyrics/")
 
 ;
-app.controller('PlaylistController', ['$scope', function ($scope) {
-    $scope.songs = [];
+app.controller('PlaylistController', ['$scope', 'angularPlayer', '$localStorage', function ($scope, angularPlayer, $localStorage) {
+    $scope.volume = 50;
+    angularPlayer.adjustVolumeSlider($scope.volume);
+    $scope.$watch("volume", function(newValue, oldValue){
+        if(newValue !== oldValue) {
+            angularPlayer.adjustVolumeSlider(newValue);
+        }
+    });
 
-    //$scope.$on('addToPlaylist', function(event, args) {
-    //    $scope.songs.push(args);
-    //    // do what you want to do
-    //});
+    $scope.$on('angularPlayer:ready', function(){
+        $localStorage.playlist.forEach(function(item,index){
+            angularPlayer.addTrack(item);
+        });
+    });
+
+    $scope.$on('player:playlist', function(event, data){
+            $localStorage.playlist = data;
+    });
 }]);
 
 app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast', 'searchSongUrl', 'searchArtistUrl', 'searchAlbumUrl', function($scope, $rootScope, $http, $mdToast, searchSongUrl, searchArtistUrl, searchAlbumUrl) {
