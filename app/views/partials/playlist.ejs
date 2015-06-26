@@ -7,7 +7,9 @@
             <div class="col-md-12">
                 <!-- init soundManager2 player -->
                 <sound-manager></sound-manager>
-
+<p>{{progress}}</p>
+                <md-slider flex min="0" max="100" ng-model="progress" aria-label="progress">
+                </md-slider>
                 <p>
                     Currently Playing: {{ currentPlaying.name }} by {{ currentPlaying.artists[0].name }} ({{ currentPostion }} / {{ currentDuration }})
                 </p>
@@ -15,31 +17,16 @@
                 <div class="seekBase" seek-track>
                     <div class="seekLoad" ng-style="{width : ( progress + '%' ) }"></div>
                 </div>
-                <br />
-                <md-button play-music class="md-fab md-mini" aria-label="Play"><i class="fa fa-play"></i></md-button>
-                <md-button pause-music class="md-fab md-mini" aria-label="Pause"><i class="fa fa-pause"></i></md-button>
-                <md-button stop-music class="md-fab md-mini" aria-label="Stop"><i class="fa fa-stop"></i></md-button>
-                <md-button ng-class="active: repeat" repeat-music class="md-fab md-mini" aria-label="Repeat"><i class="fa fa-repeat"></i></md-button>
-                <!--<button repeat-music>Repeat ({{ repeat }})</button>-->
                 <md-button class="md-fab md-mini" aria-label="Play/Pause" play-pause-toggle data-play="<i class='fa fa-play'></i>" data-pause="<i class='fa fa-pause'>"><i class="fa fa-play"></i></md-button>
-
-                Is Playing: {{ isPlaying }}
-                <br/>
-                <br/>Volume: {{ volume }} -
-                <button music-volume data-type="increase">+</button>
-                -
-                <button music-volume data-type="decrease">-</button>
-                -
-                <button mute-music>Mute ({{ mute }})</button>
-                <br/>
-                <br/>
-                <button prev-track>Prev Track</button>
-                -
-                <button next-track>Next Track</button>
-                -
+                <md-button stop-music class="md-fab md-mini" aria-label="Stop"><i class="fa fa-stop"></i></md-button>
+                <md-button ng-class="repeat ? 'active' : ''" repeat-music class="repeat-button md-fab md-mini" aria-label="Repeat"><i class="fa fa-repeat"></i></md-button>
+                <!--Is Playing: {{ isPlaying }}-->
+                <md-button ng-class="mute  ? 'active' : ''" mute-music class="mute-button md-fab md-mini" aria-label="Mute"><i class="fa fa-volume-off"></i></md-button>
+                <md-slider flex min="0" max="100" ng-disabled="mute" ng-model="volume" aria-label="Volume">
+                </md-slider>
+                <md-button prev-track class="md-fab md-mini" aria-label="Prev Track"><i class="fa fa-step-backward"></i></md-button>
+                <md-button next-track class="md-fab md-mini" aria-label="Next Track"><i class="fa fa-step-forward"></i></md-button>
                 <button clear-playlist>Clear Playlist</button>
-                <br/>
-                <br/>
                 <h5>Playlist</h5>
                 <ul>
                     <li ng-repeat="song in playlist">
