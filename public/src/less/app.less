@@ -1,9 +1,17 @@
 //new angular material theme
-.search-section md-grid-list md-grid-tile {
-  background-size: 100%;
+.search-section {
+  md-grid-list md-grid-tile {
+    background-size: 100%;
+    md-grid-tile-footer {
+      background: rgba(0, 0, 0, 0.8);
+      h4{
+        color: #999999;
+      }
+    }
+  }
 }
 
-md-toast{
+md-toast {
   position: fixed;
 }
 
@@ -13,9 +21,27 @@ md-toast{
   right: 10px;
 }
 
-.repeat-button.active{
-  color:red;
+.repeat-button.active {
+  color: red;
 }
-.mute-button.active{
-  color:black;
+
+.mute-button.active {
+  color: black;
 }
+
+md-list.playlist {
+  md-list-item.md-2-line {
+    &.active {
+      background-color: rgba(255, 64, 129, 0.5);
+      transition-duration: 3s;
+    }
+    .remove-from-list {
+      padding: 10px;
+
+    }
+    .md-list-item-text h3 {
+      line-height: 1;
+    }
+  }
+}
+

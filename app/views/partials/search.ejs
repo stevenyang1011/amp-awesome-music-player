@@ -1,6 +1,6 @@
 <div class='search-section' ng-controller="SearchController">
     <form ng-submit="handleSearchButtonClick()">
-        <div layout layout-sm="column">
+        <div layout layout="row">
             <md-input-container flex>
                 <label>Search here...</label>
                 <input ng-model="q">
@@ -21,8 +21,8 @@
                             <md-grid-tile md-rowspan="1" md-colspan="1" md-colspan-sm="1"
                                     ng-repeat="song in songs.data" ng-style="{'background-image':'url({{song.album.picUrl}})'}">
                                 <md-grid-tile-footer>
-                                    <h3>{{song.name}} - {{song.artists[0].name}}</h3>
-                                    <h4>{{song.album.name}}</h4>
+                                    <h3>{{song.name}}</h3>
+                                    <h4>{{song.album.name}} - {{song.artists[0].name}}</h4>
                                 </md-grid-tile-footer>
                                 <md-button ng-click="showAddToPlaylistToast()" music-player add-song="song" class="add-button md-fab md-mini" aria-label="Add to Playlist"><i class="fa fa-plus" ></i></md-button>
                             </md-grid-tile>
@@ -31,12 +31,12 @@
                 </md-tab>
                 <md-tab label="Artists">
                     <md-content class="md-padding">
-
+                        Coming Soon!
                     </md-content>
                 </md-tab>
                 <md-tab label="Albums">
                     <md-content class="md-padding">
-
+                        Coming Soon!
                     </md-content>
                 </md-tab>
             </md-tabs>

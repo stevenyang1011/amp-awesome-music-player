@@ -1,9 +1,9 @@
 var api = require('../model/api.server.model');
-
+var RESULTS_PER_PAGE = 60;
 exports.searchSong = function(req, res, next) {
     var page = parseInt(req.body.p);
     if (req.body.q && page > 0) {
-        api.search(req.body.q, '1', (page - 1) * 10, 'true', 10, function (err, data) {
+        api.search(req.body.q, '1', (page - 1) * RESULTS_PER_PAGE, 'true', RESULTS_PER_PAGE, function (err, data) {
             if (err) {
                 res.send(err);
             } else {
@@ -31,7 +31,7 @@ exports.searchSong = function(req, res, next) {
 exports.searchArtist = function(req, res, next) {
     var page = parseInt(req.body.p);
     if (req.body.q && page > 0) {
-        api.search(req.body.q, '100', (page - 1) * 10, 'true', 10, function (err, data) {
+        api.search(req.body.q, '100', (page - 1) * RESULTS_PER_PAGE, 'true', RESULTS_PER_PAGE, function (err, data) {
             if (err) {
                 res.send(err);
             } else {
@@ -53,7 +53,7 @@ exports.searchArtist = function(req, res, next) {
 exports.searchAlbum = function(req, res, next) {
     var page = parseInt(req.body.p);
     if (req.body.q && page > 0) {
-        api.search(req.body.q, '10', (page - 1) * 10, 'true', 10, function (err, data) {
+        api.search(req.body.q, '10', (page - 1) * RESULTS_PER_PAGE, 'true', RESULTS_PER_PAGE, function (err, data) {
             if (err) {
                 res.send(err);
             } else {
@@ -80,7 +80,7 @@ exports.searchAlbum = function(req, res, next) {
 exports.viewArtist = function(req, res, next) {
     var page = parseInt(req.body.p);
     if( page > 0) {
-        api.artist(req.params.artist_id, (page - 1) * 10, 'true', 10, function (err, data) {
+        api.artist(req.params.artist_id, (page - 1) * RESULTS_PER_PAGE, 'true', RESULTS_PER_PAGE, function (err, data) {
             if (err) {
                 res.send(err);
             } else {
