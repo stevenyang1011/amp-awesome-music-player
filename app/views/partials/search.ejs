@@ -14,6 +14,7 @@
             <md-tabs md-dynamic-height md-border-bottom md-center-tabs="false">
                 <md-tab label="Songs">
                     <md-content class="md-padding">
+                        <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
                         <md-grid-list
                                 md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
                                 md-row-height-gt-md="1:1" md-row-height="2:2"

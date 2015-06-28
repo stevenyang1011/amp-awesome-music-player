@@ -1,4 +1,5 @@
 app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast', 'searchSongUrl', 'searchArtistUrl', 'searchAlbumUrl', function($scope, $rootScope, $http, $mdToast, searchSongUrl, searchArtistUrl, searchAlbumUrl) {
+    $scope.loading = false;
     $scope.songs = {
         'p': 1,
         'data': ''
@@ -16,15 +17,20 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast',
         $scope.searchSongs();
     }
     $scope.searchSongs = function(){
-        $http.post(searchSongUrl,{
-            'q': $scope.q,
-            'p': $scope.songs.p
-        }).success(function(response) {
-            if(response.code == '200'){
-                console.log(response.result);
-                $scope.songs.data = response.result;
-            }
-        });
+        if (typeof($scope.q) === 'string') {
+            $scope.songs.data = {};
+            $scope.loading = true;
+            $http.post(searchSongUrl, {
+                'q': $scope.q,
+                'p': $scope.songs.p
+            }).success(function (response) {
+                if (response.code == '200') {
+                    console.log(response.result);
+                    $scope.loading = false;
+                    $scope.songs.data = response.result;
+                }
+            });
+        }
     }
     $scope.showAddToPlaylistToast = function() {
         $mdToast.show(
