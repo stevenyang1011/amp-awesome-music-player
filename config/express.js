@@ -1,5 +1,5 @@
 var express = require('express'),
-    morgan = require('morgan'),
+    //morgan = require('morgan'),
     //compress = require('compression'),
     bodyParser = require('body-parser'),
     fs = require('fs');
@@ -18,8 +18,8 @@ module.exports = function() {
     app.set('view engine', 'ejs');
     app.set('views', process.cwd()+'/app/views');
 // log requests to access log
-    var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
-    app.use(morgan('combined', {stream: accessLogStream}));
+//    var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+//    app.use(morgan('combined', {stream: accessLogStream}));
 
 // log requests to the console
 // app.use(morgan('dev'));
