@@ -9,13 +9,12 @@
                 <sound-manager></sound-manager>
                 <md-list class="playlist">
                     <md-list-item md-ink-ripple class="md-2-line md-clickable" ng-repeat="song in playlist" ng-class="currentPlaying.id == song.id? 'active' : ''">
-                        <img  play-from-playlist="song" src="{{song.album.picUrl}}" class="md-avatar" alt="{{song.album.name}}" />
-                        <div  play-from-playlist="song" class="md-list-item-text">
+                        <img play-from-playlist="song" ng-src="{{song.album.picUrl}}" class="md-avatar" alt="{{song.album.name}}" />
+                        <div play-from-playlist="song" class="md-list-item-text">
                             <h3>{{ song.name }}</h3>
                             <h4>{{ song.artists[0].name }}</h4>
                         </div>
                         <a class="remove-from-list" remove-from-playlist="song" data-index="{{$index}}"><i class="fa fa-times"></i></a>
-                        <span ng-if=""> - (current)</span>
                     </md-list-item>
                 </md-list>
                 <md-slider flex min="0" max="100" ng-model="progress" aria-label="progress" ng-disabled="true">
