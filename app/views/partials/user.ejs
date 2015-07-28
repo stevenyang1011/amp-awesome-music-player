@@ -1,0 +1,13 @@
+<h2>User</h2>
+<% for(var i in messages) { %>
+<div class="flash"><%= messages[i] %></div>
+<% } %>
+<% if ( user ) { %>
+<a href="/signout">Sign out</a>
+<% } else { %>
+<% include ./signin %>
+<% include ./signup %>
+<% } %>
+<script type="text/javascript">
+	window.user = <%- user || 'null' %>;
+</script>
