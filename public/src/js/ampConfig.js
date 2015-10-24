@@ -14,4 +14,6 @@ angular.module("ampConfig", [])
 
 .constant("viewLyricsUrl", "http://localhost:4570/lyrics/")
 
+.constant("updateUserUrl", "http://localhost:4570/api/users/")
+
 ;

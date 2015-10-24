@@ -46,6 +46,8 @@ angular.module("ampConfig", [])
 
 .constant("viewLyricsUrl", "http://localhost:4570/lyrics/")
 
+.constant("updateUserUrl", "http://localhost:4570/api/users/")
+
 ;
 app.controller('PlaylistController', ['$scope', 'angularPlayer', '$localStorage', function ($scope, angularPlayer, $localStorage) {
     $scope.volume = 50;
@@ -109,4 +111,43 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast',
                 .hideDelay(3000)
         );
     };
+}]);
+app.controller('UserController', ['$scope', 'UserService', function ($scope, UserService) {
+    $scope.handleUpdateButtonClick = function(){
+        UserService.syncPlaylist();
+    }
+}]);
+app.service('UserService', ['$http', '$localStorage', 'updateUserUrl', function ($http, $localStorage, updateUserUrl) {
+
+    var user = [];
+
+    this.login = function(){
+
+    }
+
+    this.logout = function(){
+
+    }
+
+    this.get = function(){
+        return user;
+    }
+
+    //this.syncPlaylist = function(){
+    //    if(typeof(user._id) !== "undefined") {
+    //        $.extend(user, {'defaultPlaylist': $localStorage.playlist});
+    //        $http.put(updateUserUrl + user._id, user)
+    //            .success(function (response) {
+    //                console.log(response);
+    //            });
+    //    }
+    //}
+
+    this.syncPlaylist = function(){
+        $.extend(window.user, { 'defaultPlaylist': $localStorage.playlist});
+        $http.put(updateUserUrl+window.user._id, window.user)
+            .success(function (response) {
+                console.log(response);
+            });
+    }
 }]);

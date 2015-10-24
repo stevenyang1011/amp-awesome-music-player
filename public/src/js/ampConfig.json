@@ -6,7 +6,8 @@
       "viewArtistUrl": "http://localhost:4570/view/artist/",
       "viewAlbumUrl": "http://localhost:4570/view/album/",
       "viewSongUrl": "http://localhost:4570/song/",
-      "viewLyricsUrl": "http://localhost:4570/lyrics/"
+      "viewLyricsUrl": "http://localhost:4570/lyrics/",
+      "updateUserUrl": "http://localhost:4570/api/users/"
     },
     "production": {
       "searchSongUrl": "http://player.stevenyang.nz/search/song",
@@ -15,6 +16,7 @@
       "viewArtistUrl": "http://player.stevenyang.nz/view/artist/",
       "viewAlbumUrl": "http://player.stevenyang.nz/view/album/",
       "viewSongUrl": "http://player.stevenyang.nz/song/",
-      "viewLyricsUrl": "http://player.stevenyang.nz/lyrics/"
+      "viewLyricsUrl": "http://player.stevenyang.nz/lyrics/",
+      "updateUserUrl": "http://localhost:4570/api/users/"
     }
 }
