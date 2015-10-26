@@ -1,11 +1,12 @@
 var users = require('../../app/controllers/users.server.controller'),
     passport = require('passport');
 module.exports = function(app) {
-    app.route('/signup')
+    app.route('/user/signup')
         .post(users.signup);
-    app.route('/signin')
+    app.route('/user/login')
         .post(passport.authenticate('local'), function(req, res) {
-            res.send(req.user);
+            res.send({code: '200', user: req.user});
         });
-    app.get('/signout', users.signout);
+    app.get('/user/logout', users.signout);
+    app.put('/user/playlist/:userId', users.update);
 };

@@ -19,13 +19,24 @@ var UserSchema = new Schema({
         //    'Password should be longer'
         //]
     },
+    firstname: {
+        type: String,
+        trim: true
+    },
+    lastname: {
+        type: String,
+        trim: true
+    },
+    nickname: {
+        type: String,
+        trim: true
+    },
+    dob: {
+        type: Date
+    },
     created: {
         type: Date,
         default: Date.now
-    },
-    role: {
-        type: String,
-        enum: ['Admin', 'Owner', 'User']
     },
     defaultPlaylist: {
         type: Object

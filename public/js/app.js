@@ -32,11 +32,11 @@ app.config(function($mdThemingProvider) {
 });
 angular.module("ampConfig", [])
 
-.constant("searchSongUrl", "http://localhost:4570/search/song")
+.constant("searchSongUrl", "http://localhost:4570/search/song/")
 
-.constant("searchArtistUrl", "http://localhost:4570/search/artist")
+.constant("searchArtistUrl", "http://localhost:4570/search/artist/")
 
-.constant("searchAlbumUrl", "http://localhost:4570/search/album")
+.constant("searchAlbumUrl", "http://localhost:4570/search/album/")
 
 .constant("viewArtistUrl", "http://localhost:4570/view/artist/")
 
@@ -46,7 +46,13 @@ angular.module("ampConfig", [])
 
 .constant("viewLyricsUrl", "http://localhost:4570/lyrics/")
 
-.constant("updateUserUrl", "http://localhost:4570/api/users/")
+.constant("userLoginUrl", "http://localhost:4570/user/login/")
+
+.constant("userLogoutUrl", "http://localhost:4570/user/logout/")
+
+.constant("userSingupUrl", "http://localhost:4570/user/signup/")
+
+.constant("userPlaylistUrl", "http://localhost:4570/user/playlist/")
 
 ;
 app.controller('PlaylistController', ['$scope', 'angularPlayer', '$localStorage', function ($scope, angularPlayer, $localStorage) {
@@ -58,15 +64,6 @@ app.controller('PlaylistController', ['$scope', 'angularPlayer', '$localStorage'
         }
     });
 
-    $scope.$on('angularPlayer:ready', function(){
-        $localStorage.playlist.forEach(function(item,index){
-            angularPlayer.addTrack(item);
-        });
-    });
-
-    $scope.$on('player:playlist', function(event, data){
-            $localStorage.playlist = data;
-    });
 }]);
 
 app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast', 'searchSongUrl', 'searchArtistUrl', 'searchAlbumUrl', function($scope, $rootScope, $http, $mdToast, searchSongUrl, searchArtistUrl, searchAlbumUrl) {
@@ -113,39 +110,121 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$mdToast',
     };
 }]);
 app.controller('UserController', ['$scope', 'UserService', function ($scope, UserService) {
+
+
+    if(window.user !== null){
+        $scope.user = window.user;
+        $scope.isLoggedIn = true;
+    }
+    else{
+        $scope.user = [];
+        $scope.isLoggedIn = false;
+    }
+
+    $scope.$on('userUpdated', function(event, data) {
+        console.log(data);
+        $scope.user = data;
+        if($scope.user == 0){
+            $scope.isLoggedIn = false;
+        }
+        else{
+            $scope.isLoggedIn = true;
+        }
+    });
+
+    $scope.handleLoginButtonClick = function(){
+        UserService.login($scope.login.email, $scope.login.password);
+    }
+
+    $scope.handleSignupButtonClick = function(){
+        UserService.signup($scope.signup.email, $scope.signup.password);
+    }
+
     $scope.handleUpdateButtonClick = function(){
-        UserService.syncPlaylist();
+        UserService.update($scope.user);
     }
+
+    $scope.handleLogoutButtonClick = function(){
+        UserService.logout();
+    }
+
+    $scope.$on('angularPlayer:ready', function(){
+        UserService.initPlaylist($scope.user);
+        $scope.$on('player:playlist', function(event, data){
+            UserService.syncPlaylist($scope.user, data);
+        });
+    });
+
 }]);
-app.service('UserService', ['$http', '$localStorage', 'updateUserUrl', function ($http, $localStorage, updateUserUrl) {
+app.service('UserService', ['$rootScope', '$http', '$localStorage', 'angularPlayer', 'userLoginUrl', 'userLogoutUrl', 'userSingupUrl', 'userPlaylistUrl', function ($rootScope, $http, $localStorage, angularPlayer, userLoginUrl, userLogoutUrl, userSingupUrl, userPlaylistUrl) {
+    var self = this;
 
-    var user = [];
-
-    this.login = function(){
-
+    self.initPlaylist = function(user){
+        if (user !== null && typeof(user.defaultPlaylist) !== 'undefined'){
+            user.defaultPlaylist.forEach(function (item, index) {
+                angularPlayer.addTrack(item);
+            });
+        }
+        else if(typeof($localStorage.playlist) !== 'undefined' ) {
+            $localStorage.playlist.forEach(function (item, index) {
+                angularPlayer.addTrack(item);
+            });
+        }
     }
 
-    this.logout = function(){
-
+    self.login = function(email, password){
+        $http.post(userLoginUrl, {
+            'email': email,
+            'password': password
+        }).success(function (response) {
+            if (response.code == '200' && response.user) {
+                console.log(response);
+                self.initPlaylist(response.user);
+                self.syncPlaylist(response.user, $localStorage.playlist);
+                $localStorage.playlist = [];
+                $rootScope.$broadcast('userUpdated',response.user);
+            }
+            else{
+                $rootScope.$broadcast('userUpdated',[]);
+            }
+        });
     }
 
-    this.get = function(){
-        return user;
+    self.logout = function(user){
+        $http.get(userLogoutUrl)
+        .success(function (response) {
+            if (response.code == '200') {
+                console.log(response);
+                angularPlayer.clearPlaylist(function(success) {
+                    if(success){
+                        $rootScope.$broadcast('userUpdated', []);
+                    }
+                });
+            }
+            else{
+                $rootScope.$broadcast('userUpdated', user);
+            }
+        });
     }
 
-    //this.syncPlaylist = function(){
-    //    if(typeof(user._id) !== "undefined") {
-    //        $.extend(user, {'defaultPlaylist': $localStorage.playlist});
-    //        $http.put(updateUserUrl + user._id, user)
-    //            .success(function (response) {
-    //                console.log(response);
-    //            });
-    //    }
-    //}
+    self.syncPlaylist = function(user, data){
+        if(typeof(user._id) !== "undefined") {
+            $.extend(user, {'defaultPlaylist': data});
+            $http.put(userPlaylistUrl + user._id, user)
+                .success(function (response) {
+                    console.log(response);
+                })
+                .error(function(response){
+                    console.log(response);
+                });
+        }
+        else{
+            $localStorage.playlist = data;
+        }
+    }
 
-    this.syncPlaylist = function(){
-        $.extend(window.user, { 'defaultPlaylist': $localStorage.playlist});
-        $http.put(updateUserUrl+window.user._id, window.user)
+    self.update = function(user) {
+        $http.put(userPlaylistUrl + user._id, user)
             .success(function (response) {
                 console.log(response);
             });

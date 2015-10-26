@@ -5,17 +5,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<% for(var i in messages) { %>
-				<div class="flash"><%= messages[i] %></div>
-				<% } %>
-				<% if ( user ) { %>
-				<pre><%= user %></pre>
-				<button ng-click="handleUpdateButtonClick()">Save Playlist</button>
-				<a href="/signout">Sign out</a>
-				<% } else { %>
-				<% include ./signin %>
-				<% include ./signup %>
-				<% } %>
+				<div class="account" ng-show="isLoggedIn">
+				<% include ./account %>
+				</div>
+				<div class="guest" ng-hide="isLoggedIn">
+				<% include ./guest %>
+				</div>
 			</div>
 		</div>
 	</div>
