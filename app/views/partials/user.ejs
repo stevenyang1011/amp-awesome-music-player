@@ -1,0 +1,21 @@
+<md-toolbar class="md-theme-light">
+	<h2 class="md-toolbar-tools">User</h2>
+</md-toolbar>
+<md-content layout-padding ng-controller="UserController">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="account" ng-show="isLoggedIn">
+				<% include ./account %>
+				</div>
+				<div class="guest" ng-hide="isLoggedIn">
+				<% include ./guest %>
+				</div>
+			</div>
+		</div>
+	</div>
+</md-content>
+
+<script type="text/javascript">
+	window.user = <%- user || 'null' %>;
+</script>

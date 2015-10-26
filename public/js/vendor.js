@@ -63516,9 +63516,9 @@ ngSoundManager.directive('soundManager', ['$filter', 'angularPlayer',
                 });
                 scope.playlist = angularPlayer.getPlaylist(); //on load
                 scope.$on('player:playlist', function(event, data) {
-                    scope.$apply(function() {
+                    //scope.$apply(function() {
                         scope.playlist = data;
-                    });
+                    //});
                 });
             }
         };

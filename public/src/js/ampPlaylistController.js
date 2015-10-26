@@ -7,13 +7,4 @@ app.controller('PlaylistController', ['$scope', 'angularPlayer', '$localStorage'
         }
     });
 
-    $scope.$on('angularPlayer:ready', function(){
-        $localStorage.playlist.forEach(function(item,index){
-            angularPlayer.addTrack(item);
-        });
-    });
-
-    $scope.$on('player:playlist', function(event, data){
-            $localStorage.playlist = data;
-    });
 }]);

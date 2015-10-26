@@ -1,4 +1,4 @@
-var api = require('../model/api.server.model');
+var api = require('../models/api.server.model');
 var RESULTS_PER_PAGE = 60;
 exports.searchSong = function(req, res, next) {
     var page = parseInt(req.body.p);

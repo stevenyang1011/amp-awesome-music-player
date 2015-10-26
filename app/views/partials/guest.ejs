@@ -1,0 +1,40 @@
+<md-card>
+	<md-card-content>
+		<h4>Already have an account?</h4>
+		<form ng-submit="handleLoginButtonClick()">
+			<div layout layout="row">
+				<md-input-container flex>
+					<label>Email</label>
+					<input type="text" name="email" ng-model="login.email" />
+				</md-input-container>
+			</div>
+			<div layout layout="row">
+				<md-input-container flex>
+					<label>Password</label>
+					<input type="password" name="password" ng-model="login.password" />
+				</md-input-container>
+			</div>
+			<md-button type="submit">Log In</md-button>
+		</form>
+	</md-card-content>
+</md-card>
+<md-card>
+	<md-card-content>
+		<form ng-submit="handleSignupButtonClick()">
+			<h4>Register if you are new</h4>
+			<div layout layout="row">
+				<md-input-container flex>
+					<label>Email</label>
+					<input type="text" name="email" ng-model="signup.email" />
+				</md-input-container>
+			</div>
+			<div layout layout="row">
+				<md-input-container flex>
+					<label>Password</label>
+					<input type="password" name="password" ng-model="signup.password" />
+				</md-input-container>
+			</div>
+			<md-button type="submit">Sign up</md-button>
+		</form>
+	</md-card-content>
+</md-card>
