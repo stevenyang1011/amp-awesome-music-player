@@ -14,6 +14,24 @@ app.service('UserService', ['$rootScope', '$http', '$localStorage', 'angularPlay
         }
     }
 
+    self.signup = function(email, password){
+        $http.post(userSingupUrl, {
+            'email': email,
+            'password': password
+        }).success(function (response) {
+            if (response.code == '200' && response.user) {
+                console.log(response);
+                self.initPlaylist(response.user);
+                self.syncPlaylist(response.user, $localStorage.playlist);
+                $localStorage.playlist = [];
+                $rootScope.$broadcast('userUpdated',response.user);
+            }
+            else{
+                $rootScope.$broadcast('userUpdated',[]);
+            }
+        });
+    }
+
     self.login = function(email, password){
         $http.post(userLoginUrl, {
             'email': email,

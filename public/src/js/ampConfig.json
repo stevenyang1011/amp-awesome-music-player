@@ -20,9 +20,9 @@
       "viewAlbumUrl": "http://player.stevenyang.nz/view/album/",
       "viewSongUrl": "http://player.stevenyang.nz/song/",
       "viewLyricsUrl": "http://player.stevenyang.nz/lyrics/",
-      "userLoginUrl": "http://localhost:4570/user/login/",
-      "userLogoutUrl": "http://localhost:4570/user/logout/",
-      "userSingupUrl": "http://localhost:4570/user/signup/",
-      "userPlaylistUrl": "http://localhost:4570/user/playlist/"
+      "userLoginUrl": "http://player.stevenyang.nz/user/login/",
+      "userLogoutUrl": "http://player.stevenyang.nz/user/logout/",
+      "userSingupUrl": "http://player.stevenyang.nz/user/signup/",
+      "userPlaylistUrl": "http://player.stevenyang.nz/user/playlist/"
     }
 }
