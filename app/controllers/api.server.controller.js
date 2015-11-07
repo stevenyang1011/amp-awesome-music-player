@@ -13,7 +13,7 @@ exports.searchSong = function(req, res, next) {
                         'name': song.name,
                         'id': song.id,
                         'album': song.album,
-                        'url': song.mp3Url,
+                        'url': song.mp3Url.replace('m2.music.126.net', 'p2.music.126.net'),
                         'artists': song.artists,
                         'album': {
                             'id': song.album.id,
@@ -111,7 +111,7 @@ exports.song = function(req, res, next) {
                        res.send({'code':'200', 'song': {
                            'id': song.id,
                            'name': song.name,
-                           'url': song.mp3Url,
+                           'url': song.mp3Url.replace('m2.music.126.net', 'p2.music.126.net'),
                            'artists': song.artists,
                            'album': song.album
                         }
